@@ -26,14 +26,14 @@
                 ['label' => '<b>MENU</b>', 'encode' => false, 'options' => ['class' => 'header']],
 
                 ['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/site/index']],
-                ['label' => 'User', 'icon' => 'file-o', 'url' => ['/user/index']],
-                ['label' => 'Log', 'icon' => 'file-o', 'url' => ['/log/index']],
+                ['label' => 'Berita', 'icon' => 'file-o', 'url' => ['/news/index']],
+                ['label' => 'Kategori', 'icon' => 'file-o', 'url' => ['/category/index']],
                 [
                     'label' => 'Access Control',
                     'icon' => 'lock',
                     'url' => '#',
                     'options' => ['class' => 'treeview'],
-                    'visible' => Yii::$app->user->can('superuser'),
+                    // 'visible' => Yii::$app->user->can('superuser'),
                     'items' => [
                         ['label' => 'User',         'url' => ['/user/index']],
                         ['label' => 'Assignment',   'url' => ['/acf/assignment']],

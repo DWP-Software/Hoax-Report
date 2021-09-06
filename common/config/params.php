@@ -6,4 +6,5 @@ return [
     'senderName' => 'Example.com mailer',
     'user.passwordResetTokenExpire' => 3600,
     'minimumPassedScore' => 70,
+    'fileStorage'                   => '@uploads/',
 ];
