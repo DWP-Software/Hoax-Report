@@ -6,7 +6,7 @@ use miloschuman\highcharts\Highcharts;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Corporate Social Responsibility PT Semen Padang';
+$this->title = 'Dashboard';
 // $this->title = Yii::$app->name;
 // Yii::$app->params['showTitle'] = false;
 ?>

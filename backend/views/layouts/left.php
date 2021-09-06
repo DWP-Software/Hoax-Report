@@ -26,14 +26,16 @@
                 ['label' => '<b>MENU</b>', 'encode' => false, 'options' => ['class' => 'header']],
 
                 ['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/site/index']],
-                ['label' => 'Berita', 'icon' => 'file-o', 'url' => ['/news/index']],
-                ['label' => 'Kategori', 'icon' => 'file-o', 'url' => ['/category/index']],
+                ['label' => 'Berita', 'icon' => 'newspaper-o ', 'url' => ['/news/index']],
+                ['label' => 'Kategori', 'icon' => 'list', 'url' => ['/category/index']],
+                ['label' => 'Laporan', 'icon' => 'file', 'url' => ['/report/index']],
+                ['label' => 'Kelola User', 'icon' => 'users', 'url' => ['/user/index']],
                 [
                     'label' => 'Access Control',
                     'icon' => 'lock',
                     'url' => '#',
                     'options' => ['class' => 'treeview'],
-                    // 'visible' => Yii::$app->user->can('superuser'),
+                    'visible' => Yii::$app->user->can('superuser'),
                     'items' => [
                         ['label' => 'User',         'url' => ['/user/index']],
                         ['label' => 'Assignment',   'url' => ['/acf/assignment']],

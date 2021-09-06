@@ -43,7 +43,7 @@ use dmstr\widgets\Alert;
     <div class="pull-right hidden-xs">
         <!-- <b>Version</b> 2.0 -->
     </div>
-    <strong>PT SEMEN PADANG &copy; </strong> 
+    <strong>Laporan Berita Hoax &copy; </strong> 
     <small>
         All rights reserved.
     </small>
