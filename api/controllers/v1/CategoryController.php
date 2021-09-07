@@ -22,7 +22,7 @@ class CategoryController extends \yii\rest\Controller
 
     public function actionIndex()
     {
-        $model = Category::find();
+        $model = Category::find()->where(['type'=>2]);
         $totalItems = $model->count();
         $data = [];
         foreach ($model->all() as $key) {

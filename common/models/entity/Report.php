@@ -4,6 +4,7 @@ namespace common\models\entity;
 
 use Yii;
 use yii\bootstrap\Html;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "report".
@@ -61,6 +62,16 @@ class Report extends \yii\db\ActiveRecord
         $array = [];
         foreach ($model->all() as $model) {
             $array[] = Html::a($model->photo, ['report/file-report', 'id' => $model->id], ['class' => 'btn btn-xs', 'target'=>'_blank']);
+        }
+        return implode('', $array);
+    }
+
+    public function getScreenshotImg()
+    {
+        $model = Photo::find()->where(['report_id' => $this->id]);
+        $array = [];
+        foreach ($model->all() as $model) {
+            $array[] =  Html::img(Url::toRoute('report/file-report?id=17'),['style'=>'width:250px; height:100px']) . ' ';
         }
         return implode('', $array);
     }

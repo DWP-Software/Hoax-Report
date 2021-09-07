@@ -125,6 +125,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'class' => 'yii\grid\ActionColumn',
             'template' => '{update}',
             'buttons' => [
+                'view' => function ($url) {
+                    return Html::a('', $url, ['class' => 'glyphicon glyphicon-eye-open btn btn-xs btn-default btn-text-info']);
+                },
                 'update' => function ($url) {
                     return Html::button('', [
                         'class' => 'glyphicon glyphicon-pencil btn btn-xs btn-default btn-text-warning showModalButton',

@@ -7,25 +7,12 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\entity\Report */
 
-$this->title = $model->id;
+$this->title = 'Detail Laporan';
 $this->params['breadcrumbs'][] = ['label' => 'Report', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="report-view">
-
-    <p>
-        <?= Html::a('<i class="glyphicon glyphicon-pencil"></i> '. 'Update', ['update', 'id' => $model->id], [
-            'class' => 'btn btn-warning',
-        ]) ?>
-        <?= Html::a('<i class="glyphicon glyphicon-trash"></i> ' . 'Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
 
     <div class="detail-view-container">
         <?= DetailView::widget([
@@ -33,10 +20,28 @@ $this->params['breadcrumbs'][] = $this->title;
             'model' => $model,
             'attributes' => [
                 // 'id',
-                'user.name:text:User',
+                'user.name:text:Nama Pelapor',
                 'news_url:url',
-                'category.name:text:Category',
-                'status:integer',
+                'category.category_name:text:Kategori',
+                [
+                    'attribute' => 'statusHtml',
+                    'label' => 'Status',
+                    'format' => 'raw',
+                ],
+                [
+                    'attribute' => 'created_at',
+                    'label' => 'Tanggal',
+                    'value' => function ($model) {
+                        return date('Y-m-d', $model->created_at);
+                    },
+                    'format' => 'text',
+                ],
+                'description',
+                [
+                    'attribute' => 'screenshotImg',
+                    'label' => 'Screenshot',
+                    'format' => 'raw',
+                ],
                 // 'created_at:datetime',
                 // 'updated_at:datetime',
                 // 'createdBy.username:text:Created By',

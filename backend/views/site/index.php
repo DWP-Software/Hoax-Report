@@ -125,8 +125,11 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'contentOptions' => ['class' => 'action-column nowrap text-left'],
             'class' => 'yii\grid\ActionColumn',
-            'template' => '{update}',
+            'template' => '{view} {update}',
             'buttons' => [
+                'view' => function ($url,$model) {
+                    return Html::a('', ['report/view','id'=>$model->id], ['class' => 'glyphicon glyphicon-eye-open btn btn-xs btn-default btn-text-info']);
+                },
                 'update' => function ($url, $model) {
                     return Html::button('', [
                         'class' => 'glyphicon glyphicon-pencil btn btn-xs btn-default btn-text-warning showModalButton',

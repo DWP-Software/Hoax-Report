@@ -27,7 +27,8 @@
 
                 ['label' => 'Laporan', 'icon' => 'dashboard', 'url' => ['/site/index']],
                 ['label' => 'Berita', 'icon' => 'newspaper-o ', 'url' => ['/news/index']],
-                ['label' => 'Kategori', 'icon' => 'list', 'url' => ['/category/index']],
+                ['label' => 'Kategori Berita', 'icon' => 'list', 'url' => ['/category/index']],
+                ['label' => 'Kategori Laporan', 'icon' => 'list', 'url' => ['/category/category']],
                 ['label' => 'Kelola User', 'icon' => 'users', 'url' => ['/user/index']],
                 [
                     'label' => 'Access Control',

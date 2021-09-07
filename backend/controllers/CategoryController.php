@@ -36,10 +36,25 @@ class CategoryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CategorySearch();
+        $searchModel = new CategorySearch(['type'=>1]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'type' => 2,
+            'title' => 'Kategori Berita',
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCategory()
+    {
+        $searchModel = new CategorySearch(['type'=>2]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'type' => 2,
+            'title' => 'Kategori Berita',
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -62,12 +77,14 @@ class CategoryController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($type)
     {
         $model = new Category();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(Yii::$app->request->referrer);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->type = $type;
+            if ($model->save())
+                return $this->redirect(Yii::$app->request->referrer);
         } else if (Yii::$app->request->isAjax) {
             return $this->renderAjax('_form', [
                 'model' => $model,
@@ -75,6 +92,9 @@ class CategoryController extends Controller
         }
         return $this->redirect(Yii::$app->request->referrer);
     }
+
+    
+    
 
     /**
      * Updates an existing Category model.
@@ -106,7 +126,7 @@ class CategoryController extends Controller
     {
         try {
             $this->findModel($id)->delete();
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->referrer);
         } catch (IntegrityException $e) {
             throw new \yii\web\HttpException(500, "Integrity Constraint Violation. This data can not be deleted due to the relation.", 405);
         }

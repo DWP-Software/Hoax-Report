@@ -9,7 +9,7 @@ use kartik\export\ExportMenu;
 /* @var $searchModel common\models\search\CategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Kategori';
+$this->title = $title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'headerOptions' => ['class' => 'text-right serial-column'],
             'contentOptions' => ['class' => 'text-right serial-column'],
         ],
-        
+
         // 'id',
         'category_name',
         [
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'toolbar' => [
             Html::button('<i class="fa fa-plus"></i> ' . 'Create', [
                 'class' => 'btn btn-success showModalButton',
-                'value' => 'create',
+                'value' => Url::to(['create','type' => $type]),
                 'title' => 'Tambah Kategori'
             ]),
             Html::a('<i class="fa fa-repeat"></i> ' . 'Reload', ['index'], ['data-pjax' => 0, 'class' => 'btn btn-default']),
