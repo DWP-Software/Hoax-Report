@@ -71,7 +71,7 @@ class Report extends \yii\db\ActiveRecord
         $model = Photo::find()->where(['report_id' => $this->id]);
         $array = [];
         foreach ($model->all() as $model) {
-            $array[] =  Html::img(Url::toRoute('report/file-report?id=17'),['style'=>'width:250px; height:100px']) . ' ';
+            $array[] =  Html::img(Url::toRoute('report/file-report?id='.$this->id),['style'=>'width:250px; height:100px']) . ' ';
         }
         return implode('', $array);
     }

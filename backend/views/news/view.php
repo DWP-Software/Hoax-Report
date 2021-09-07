@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'photo',
                     'value' => function($model){
-                        return Html::a($model->photo, ['report/file-news','id'=>$model->id], ['target'=>'_blank']);
+                        return Html::img(Url::toRoute('report/file-news?id='.$model->id),['style'=>'width:250px; height:100px']) . ' ';
                     },
                     'format' => 'raw'
                 ],
