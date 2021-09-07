@@ -132,12 +132,16 @@ class ReportController extends Controller
     }
     public function actionFileReport($id, $field = 'photo')
     {
-        $model = Photo::findOne($id);
-        downloadFile($model, $field, $model->photo);
+        if ($model = Photo::findOne($id))
+            downloadFile($model, $field, $model->photo);
+        else
+            echo "file tidak ditemukan";
     }
     public function actionFileNews($id, $field = 'photo')
     {
-        $model = News::findOne($id);
-        downloadFile($model, $field, $model->photo);
+        if ($model = Photo::findOne($id))
+            downloadFile($model, $field, $model->photo);
+        else
+            echo "file tidak ditemukan";
     }
 }
