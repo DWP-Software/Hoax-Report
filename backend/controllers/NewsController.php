@@ -73,6 +73,10 @@ class NewsController extends Controller
                 unset($model->$field);
             }
 
+            if ($model->status == News::STATUS_PUBLISH) {
+                $model->publish_at = time();
+            }
+
             if ($model->save()) {
                 foreach ($model->uploadableFields() as $field) {
                     $uploadedFile = UploadedFile::getInstance($model, $field);
@@ -99,10 +103,26 @@ class NewsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            foreach ($model->uploadableFields() as $field) {
+                unset($model->$field);
+            }
+
+            if ($model->status == News::STATUS_PUBLISH) {
+                $model->publish_at = time();
+            }
+
+            if ($model->save()) {
+                foreach ($model->uploadableFields() as $field) {
+                    $uploadedFile = UploadedFile::getInstance($model, $field);
+                    if ($uploadedFile) uploadFile($model, $field, $uploadedFile);
+                }
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                Yii::$app->session->addFlash('error', \yii\helpers\Json::encode($model->errors));
+            }
         } else {
-            return $this->render('update', [
+            return $this->render('create', [
                 'model' => $model,
             ]);
         }
@@ -139,5 +159,4 @@ class NewsController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-   
 }

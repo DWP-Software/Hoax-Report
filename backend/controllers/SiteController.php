@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\SignupForm;
+use common\models\entity\Report;
 use common\models\entity\User;
 use Yii;
 use yii\web\Controller;
@@ -12,6 +13,7 @@ use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use common\models\LoginForm;
 use common\models\PasswordForm;
+use common\models\search\ReportSearch;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 
@@ -68,8 +70,17 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new ReportSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $categories = Report::find()->groupBy('category_id')->all();
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'categories' => $categories
+        ]);
     }
+
 
     /**
      * Login action.

@@ -5,14 +5,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\entity\News */
+/* @var $model common\models\entity\Report */
 
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Berita', 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Report', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="news-view">
+<div class="report-view">
 
     <p>
         <?= Html::a('<i class="glyphicon glyphicon-pencil"></i> '. 'Update', ['update', 'id' => $model->id], [
@@ -33,20 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'model' => $model,
             'attributes' => [
                 // 'id',
-                'title',
-                'category.category_name:text:Kategori',
-                'publish_at',
-                'author.name:text:Author',
-                'content:raw',
-                [
-                    'attribute' => 'photo',
-                    'value' => function($model){
-                        return Html::a($model->photo, ['report/file-news','id'=>$model->id], ['target'=>'_blank']);
-                    },
-                    'format' => 'raw'
-                ],
-                'views:integer',
-                'statusHtml:raw:Status'
+                'user.name:text:User',
+                'news_url:url',
+                'category.name:text:Category',
+                'status:integer',
                 // 'created_at:datetime',
                 // 'updated_at:datetime',
                 // 'createdBy.username:text:Created By',

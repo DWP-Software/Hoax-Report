@@ -15,16 +15,7 @@ use yii\bootstrap\ActiveForm;
         <div class="row">
             <div class="col-md-12 col-sm-12">
 
-                <?php $form = ActiveForm::begin(['layout' => 'horizontal', 'fieldConfig' => [
-                    'template' => "{label}\n{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
-                    'horizontalCssClasses' => [
-                        'label' => 'col-sm-2 text-left',
-                        'offset' => 'col-sm-offset-4',
-                        'wrapper' => 'col-sm-8',
-                        'error' => '',
-                        'hint' => '',
-                    ],
-                ],]); ?>
+                <?php $form = ActiveForm::begin(); ?>
 
                 <?= $form->field($model, 'category_name')->textInput(['maxlength' => true]) ?>
 

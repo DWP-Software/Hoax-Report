@@ -2,18 +2,20 @@
 
 namespace backend\controllers;
 
+use common\models\entity\News;
+use common\models\entity\Photo;
 use Yii;
-use common\models\entity\Category;
-use common\models\search\CategorySearch;
+use common\models\entity\Report;
+use common\models\search\ReportSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\IntegrityException;
 
 /**
- * CategoryController implements the CRUD actions for Category model.
+ * ReportController implements the CRUD actions for Report model.
  */
-class CategoryController extends Controller
+class ReportController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,22 +33,24 @@ class CategoryController extends Controller
     }
 
     /**
-     * Lists all Category models.
+     * Lists all Report models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CategorySearch();
+        $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $categories = Report::find()->groupBy('category_id')->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'categories' => $categories
         ]);
     }
 
     /**
-     * Displays a single Category model.
+     * Displays a single Report model.
      * @param integer $id
      * @return mixed
      */
@@ -58,26 +62,25 @@ class CategoryController extends Controller
     }
 
     /**
-     * Creates a new Category model.
+     * Creates a new Report model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Category();
+        $model = new Report();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(Yii::$app->request->referrer);
-        } else if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('_form', [
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
                 'model' => $model,
             ]);
         }
-        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
-     * Updates an existing Category model.
+     * Updates an existing Report model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -97,7 +100,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Deletes an existing Category model.
+     * Deletes an existing Report model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -113,18 +116,28 @@ class CategoryController extends Controller
     }
 
     /**
-     * Finds the Category model based on its primary key value.
+     * Finds the Report model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Category the loaded model
+     * @return Report the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Category::findOne($id)) !== null) {
+        if (($model = Report::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    public function actionFileReport($id, $field = 'photo')
+    {
+        $model = Photo::findOne($id);
+        downloadFile($model, $field, $model->photo);
+    }
+    public function actionFileNews($id, $field = 'photo')
+    {
+        $model = News::findOne($id);
+        downloadFile($model, $field, $model->photo);
     }
 }

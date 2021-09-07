@@ -3,14 +3,16 @@
 namespace common\models\entity;
 
 use Yii;
+use yii\bootstrap\Html;
 
 /**
  * This is the model class for table "report".
  *
  * @property integer $id
  * @property integer $user_id
- * @property integer $news_url
+ * @property string $news_url
  * @property integer $category_id
+ * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $created_by
@@ -18,11 +20,51 @@ use Yii;
  *
  * @property Photo[] $photos
  * @property Category $category
+ * @property User $user
  * @property User $createdBy
  * @property User $updatedBy
  */
 class Report extends \yii\db\ActiveRecord
 {
+    const STATUS_NEW = 0;
+    const STATUS_READ = 1;
+    const STATUS_PROCESS = 2;
+    const STATUS_FINISH = 3;
+
+
+    public static function statuses($index = 'all', $html = false, $cssClass = '')
+    {
+        $array = [
+            self::STATUS_NEW => 'Baru',
+            self::STATUS_READ => 'Dibaca',
+            self::STATUS_PROCESS => 'Prosess',
+            self::STATUS_FINISH => 'Selesai',
+        ];
+        if ($html) $array = [
+            self::STATUS_NEW => '<span class="label label-default label-inline nowrap">baru</span>',
+            self::STATUS_READ => '<span class="label label-primary label-inline nowrap">Dibaca</span>',
+            self::STATUS_PROCESS => '<span class="label label-warning label-inline nowrap">Prosess</span>',
+            self::STATUS_FINISH => '<span class="label label-success label-inline nowrap">Selesai</span>',
+        ];
+        if (isset($array[$index])) return $array[$index];
+        if ($index === 'all') return $array;
+        return null;
+    }
+    public function getStatusHtml()
+    {
+        return self::statuses($this->status, true);
+    }
+
+    public function getScreenshot()
+    {
+        $model = Photo::find()->where(['report_id' => $this->id]);
+        $array = [];
+        foreach ($model->all() as $model) {
+            $array[] = Html::a($model->photo, ['file-report', 'id' => $model->id], ['class' => 'btn btn-xs', 'target'=>'_blank']);
+        }
+        return implode('', $array);
+    }
+
     /**
      * @inheritdoc
      */
@@ -33,7 +75,7 @@ class Report extends \yii\db\ActiveRecord
             \yii\behaviors\BlameableBehavior::className(),
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -48,10 +90,11 @@ class Report extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'category_id'], 'required'],
-            [['news_url'], 'string'],
-            [['user_id', 'category_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['user_id', 'news_url', 'category_id'], 'required'],
+            [['user_id', 'category_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['news_url'], 'string', 'max' => 225],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];
@@ -64,9 +107,10 @@ class Report extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User',
-            'news_url' => 'News Url',
-            'category_id' => 'Category',
+            'user_id' => 'Nama Pelapor',
+            'news_url' => 'Url',
+            'category_id' => 'Kategori',
+            'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
@@ -88,6 +132,14 @@ class Report extends \yii\db\ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**

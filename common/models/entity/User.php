@@ -76,7 +76,7 @@ class User extends \common\models\User
     {
         return [
             'id'                   => 'ID',
-            'name'                 => 'Name',
+            'name'                 => 'Nama',
             'username'             => 'Username',
             'auth_key'             => 'Auth Key',
             'password_hash'        => 'Password Hash',

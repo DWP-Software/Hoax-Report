@@ -20,7 +20,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="report-index">
 
     <?php
-    echo $this->render('_search', ['model' => $searchModel]);
     $exportColumns = [
         [
             'class' => 'yii\grid\SerialColumn',
@@ -126,10 +125,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'class' => 'yii\grid\ActionColumn',
             'template' => '{update}',
             'buttons' => [
-                'update' => function ($url, $model) {
+                'update' => function ($url) {
                     return Html::button('', [
                         'class' => 'glyphicon glyphicon-pencil btn btn-xs btn-default btn-text-warning showModalButton',
-                        'value' => Url::toRoute(['/report/update','id'=>$model->id]),
+                        'value' => $url,
                         'title' => 'Ubah Status'
                     ]);
                 }

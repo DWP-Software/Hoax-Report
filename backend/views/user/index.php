@@ -10,7 +10,7 @@ use common\models\entity\User;
 /* @var $searchModel common\models\search\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'User';
+$this->title = 'Kelola User';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

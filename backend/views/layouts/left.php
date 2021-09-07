@@ -25,10 +25,9 @@
             $menuItems = [
                 ['label' => '<b>MENU</b>', 'encode' => false, 'options' => ['class' => 'header']],
 
-                ['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/site/index']],
+                ['label' => 'Laporan', 'icon' => 'dashboard', 'url' => ['/site/index']],
                 ['label' => 'Berita', 'icon' => 'newspaper-o ', 'url' => ['/news/index']],
                 ['label' => 'Kategori', 'icon' => 'list', 'url' => ['/category/index']],
-                ['label' => 'Laporan', 'icon' => 'file', 'url' => ['/report/index']],
                 ['label' => 'Kelola User', 'icon' => 'users', 'url' => ['/user/index']],
                 [
                     'label' => 'Access Control',
