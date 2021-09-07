@@ -7,7 +7,7 @@ use miloschuman\highcharts\Highcharts;
 
 $data = [];
 foreach ($categories as $key) {
-    $count = Report::find()->where(['category_id' => $key->category_id])->count();
+    $count = Report::find()->joinWith('category')->where(['category_id' => $key->category_id, 'type'=>2])->count();
     if ($count) {
         $data[] = [
             'name' => $key->category->category_name,

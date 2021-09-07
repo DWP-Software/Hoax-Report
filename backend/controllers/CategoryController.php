@@ -40,7 +40,7 @@ class CategoryController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'type' => 2,
+            'type' => 1,
             'title' => 'Kategori Berita',
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

@@ -34,7 +34,7 @@ class NewsController extends \yii\rest\Controller
                 'content' => $key->content,
                 'publish_at' => $key->publish_at,
                 'category' => $key->category->category_name,
-                'url_photo' => Url::to(['/file/file-news', 'id' => $key->id]),
+                'url_photo' => Url::base(true) . '/file/file-news?id='.$key->id,
                 'views' => $key->views
             ]];
             $data = array_merge($data, $arr);
@@ -63,7 +63,7 @@ class NewsController extends \yii\rest\Controller
                 'content' => $key->content,
                 'publish_at' => $key->publish_at,
                 'category' => $key->category->category_name,
-                'url_photo' => Url::to(['/file/file-news', 'id' => $key->id]),
+                'url_photo' => Url::base(true) . '/file/file-news?id='.$key->id,
                 'views' => $key->views
             ]];
             $data = array_merge($data, $arr);

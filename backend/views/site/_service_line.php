@@ -15,8 +15,8 @@ for ($i = 1; $i <= 12; $i++) {
     }else{
         $month = $i;
     }
-    $count = [(int)Report::find()
-        ->where(["date_format(FROM_UNIXTIME(created_at), '%Y-%m')" => $year.'-'.$month])
+    $count = [(int)Report::find()->joinWith('category')
+        ->where(["date_format(FROM_UNIXTIME(report.created_at), '%Y-%m')" => $year.'-'.$month, 'type'=>2])
         ->count()];
     $report = array_merge($report, $count);
 }

@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute' => 'category_id',
             'value' => 'category.category_name',
             'filterType' => GridView::FILTER_SELECT2,
-            'filter' => ArrayHelper::map(Category::find()->orderBy('category_name')->asArray()->all(), 'id', 'category_name'),
+            'filter' => ArrayHelper::map(Category::find()->where(['type'=>1])->orderBy('category_name')->asArray()->all(), 'id', 'category_name'),
             'filterInputOptions' => ['placeholder' => ''],
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true],

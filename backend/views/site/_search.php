@@ -20,7 +20,7 @@ use yii\helpers\Html;
     <div class="row">
         <div class="col-md-5">
             <?= $form->field($model, 'category_id')->widget(Select2::classname(), [
-                'data' => ArrayHelper::map(Category::find()->all(), 'id', 'category_name'),
+                'data' => ArrayHelper::map(Category::find()->where(['type'=>2])->all(), 'id', 'category_name'),
                 'options' => ['placeholder' => 'Kategori'],
                 'pluginOptions' => ['allowClear' => true],
             ])->label(false); ?>
