@@ -2,6 +2,7 @@
 
 namespace api\controllers\v1;
 
+use common\models\entity\Category;
 use common\models\entity\News;
 use common\models\entity\Photo;
 use common\models\entity\Report;
@@ -41,45 +42,49 @@ class ReportController extends \yii\rest\Controller
         $model->category_id = $params['category_id'];
         $model->description = $params['description'];
 
-
         $uploadedFile = UploadedFile::getInstancesByName("photo");
 
-        if (empty($uploadedFile)) {
-            Yii::$app->response->statusCode = 403;
-            return array(
-                'status' => 0,
-                'message' => '"Must upload at least 1 file in photo form-data POST"',
-                'data' => []
-            );
-        }
+        $category = Category::find()->where(['id' => $params['category_id']])->one();
+        if ($category->type == 2) {
+            if (empty($uploadedFile)) {
+                Yii::$app->response->statusCode = 403;
+                return array(
+                    'status' => 0,
+                    'message' => '"Must upload at least 1 file in photo form-data POST"',
+                    'data' => []
+                );
+            }
 
 
-        if ($model->save()) {
-            // $uploads now contains 1 or more UploadedFile instances
-            foreach ($uploadedFile as $file) {
-                $photo = new Photo();
-                $photo->photo = $file->name;
-                $photo->report_id = $model->id;
-                if ($photo->save()) {
-                    foreach ($photo->uploadableFields() as $field) {
-                        if ($file) {
-                            uploadFile($photo, $field, $file);
+            if ($model->save()) {
+                // $uploads now contains 1 or more UploadedFile instances
+                foreach ($uploadedFile as $file) {
+                    $photo = new Photo();
+                    $photo->photo = $file->name;
+                    $photo->report_id = $model->id;
+                    if ($photo->save()) {
+                        foreach ($photo->uploadableFields() as $field) {
+                            if ($file) {
+                                uploadFile($photo, $field, $file);
+                            }
                         }
+                    } else {
+                        Yii::$app->response->statusCode = 403;
+                        Report::findOne($model->id)->delete();
                     }
-                } else {
-                    Yii::$app->response->statusCode = 403;
-                    Report::findOne($model->id)->delete();
                 }
+            } else {
+                Yii::$app->response->statusCode = 403;
+            }
+
+            if (Yii::$app->response->statusCode == 200) {
+                return array('status' => 1, 'message' => 'Berhasil disimpan', 'data' => $model->attributes);
+            } else {
+                Yii::$app->response->statusCode = 403;
+                return array('status' => 0, 'message' => 'Gagal menyimpan data', 'errors' => $model->errors);
             }
         } else {
-            Yii::$app->response->statusCode = 403;
-        }
-
-        if (Yii::$app->response->statusCode == 200) {
-            return array('status' => 1, 'message' => 'Berhasil disimpan', 'data' => $model->attributes);
-        } else {
-            Yii::$app->response->statusCode = 403;
-            return array('status' => 0, 'message' => 'Gagal menyimpan data', 'errors' => $model->errors);
+            return array('status' => 0, 'message' => 'Kategori tidak valid');
         }
     }
 
@@ -93,7 +98,7 @@ class ReportController extends \yii\rest\Controller
             $arr_photo = [];
             foreach ($photos as $photo) {
                 $arr = [[
-                    'photo' =>  Url::base(true) . '/file/file-report?id='.$photo->id,
+                    'photo' =>  Url::base(true) . '/file/file-report?id=' . $photo->id,
                 ]];
                 $arr_photo = array_merge($arr_photo, $arr);
             }
@@ -108,6 +113,4 @@ class ReportController extends \yii\rest\Controller
 
         return array('status' => 1, 'data' => $data, 'total_item' => $totalItems);
     }
-
-
 }

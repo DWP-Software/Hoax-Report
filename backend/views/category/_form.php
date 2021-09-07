@@ -23,7 +23,6 @@ use yii\bootstrap\ActiveForm;
                 <div class="form-panel">
                     <div class="row">
                         <div class="col-sm-12 text-right">
-                        <?= Html::a('<i class="fa fa-arrow-left"></i> Kembali','index', ['class' => 'btn btn-default']) ?>
                         <?= Html::submitButton('<i class="glyphicon glyphicon-ok"></i> Simpan', ['class' => 'btn btn-success']) ?>
                         </div>
                     </div>
