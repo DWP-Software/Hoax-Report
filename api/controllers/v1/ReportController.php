@@ -93,7 +93,7 @@ class ReportController extends \yii\rest\Controller
             $arr_photo = [];
             foreach ($photos as $photo) {
                 $arr = [[
-                    'photo' => Url::to(['file/file-report','id'=>$photo->id]),
+                    'photo' =>  Url::base(true) . '/file/file-report?id='.$photo->id,
                 ]];
                 $arr_photo = array_merge($arr_photo, $arr);
             }
