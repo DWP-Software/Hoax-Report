@@ -39,6 +39,7 @@ class ReportController extends \yii\rest\Controller
         $model->user_id = Yii::$app->user->identity->id;
         $model->news_url = $params['news_url'];
         $model->category_id = $params['category_id'];
+        $model->description = $params['description'];
 
 
         $uploadedFile = UploadedFile::getInstancesByName("photo");

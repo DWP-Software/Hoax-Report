@@ -90,9 +90,10 @@ class Report extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'news_url', 'category_id'], 'required'],
+            [['user_id', 'news_url', 'category_id','description'], 'required'],
             [['user_id', 'category_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['news_url'], 'string', 'max' => 225],
+            [['description'],'safe'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
@@ -111,6 +112,7 @@ class Report extends \yii\db\ActiveRecord
             'news_url' => 'Url',
             'category_id' => 'Kategori',
             'status' => 'Status',
+            'description' => 'Keterangan',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
