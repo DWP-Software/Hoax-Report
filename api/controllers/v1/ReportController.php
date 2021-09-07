@@ -48,7 +48,7 @@ class ReportController extends \yii\rest\Controller
             Yii::$app->response->statusCode = 403;
             return array(
                 'status' => 0,
-                'message' => '"Must upload at least 1 file in upfile form-data POST"',
+                'message' => '"Must upload at least 1 file in photo form-data POST"',
                 'data' => []
             );
         }

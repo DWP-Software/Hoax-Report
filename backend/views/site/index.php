@@ -108,6 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'label' => 'Status',
             'format' => 'raw',
         ],
+        'description:nText:Deskripsi',
         [
             'attribute' => 'screenshot',
             'label' => 'Screenshot',

@@ -60,7 +60,7 @@ class Report extends \yii\db\ActiveRecord
         $model = Photo::find()->where(['report_id' => $this->id]);
         $array = [];
         foreach ($model->all() as $model) {
-            $array[] = Html::a($model->photo, ['file-report', 'id' => $model->id], ['class' => 'btn btn-xs', 'target'=>'_blank']);
+            $array[] = Html::a($model->photo, ['report/file-report', 'id' => $model->id], ['class' => 'btn btn-xs', 'target'=>'_blank']);
         }
         return implode('', $array);
     }
