@@ -94,7 +94,7 @@ class News extends \yii\db\ActiveRecord
 
     public function getScreenshotImg()
     {
-            $html =  Html::img(Url::toRoute('report/file-news?id='.$this->id),['style'=>'width:250px; height:100px']) . ' ';
+            $html =  Html::img(Url::toRoute('report/file-news?id='.$this->id),['style'=>'width:200px; height:100px']) . ' ';
         
         return $html;
     }
