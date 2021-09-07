@@ -3,6 +3,8 @@
 namespace common\models\entity;
 
 use Yii;
+use yii\bootstrap\Html;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "news".
@@ -88,6 +90,13 @@ class News extends \yii\db\ActiveRecord
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];
+    }
+
+    public function getScreenshotImg()
+    {
+            $html =  Html::img(Url::toRoute('report/file-news?id='.$this->id),['style'=>'width:250px; height:100px']) . ' ';
+        
+        return $html;
     }
 
     public static function uploadableFields()

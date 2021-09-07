@@ -104,10 +104,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
         [
-            'attribute' => 'photo',
-            'value' => function ($model) {
-                return Html::a($model->photo, ['report/file-news','id'=>$model->id], ['target'=>'_blank']);
-            },
+            'attribute' => 'screenshotImg',
+            'label' => 'Foto Utama',
+            // 'value' => function ($model) {
+            //     return Html::a($model->photo, ['report/file-news','id'=>$model->id], ['target'=>'_blank']);
+            // },
             'format' => 'raw'
         ],
         [
