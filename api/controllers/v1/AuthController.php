@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 
 class AuthController extends \yii\rest\Controller
 {
+  
   protected function verbs()
   {
     return [
@@ -20,10 +21,18 @@ class AuthController extends \yii\rest\Controller
           'logout' => ['post'],
         ],
       ],
+      'request' => [
+        'parsers' => [
+            'multipart/form-data' => 'yii\web\MultipartFormDataParser'
+        ],
+    ],
     ];
   }
+
+
   public function actionLogin()
   {
+    
     $email = !empty($_POST['email']) ? $_POST['email'] : '';
     $password = !empty($_POST['password']) ? $_POST['password'] : '';
     $response = [];
